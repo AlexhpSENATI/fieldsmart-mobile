@@ -1,11 +1,8 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-import { Platform } from 'react-native';
-
+import { Text, Platform } from 'react-native';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
 export default function TabLayout() {
@@ -14,30 +11,95 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
-          },
-          default: {},
-        }),
-      }}>
+        tabBarShowLabel: true,
+        tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: '#444',
+        tabBarActiveBackgroundColor: '#000',
+        tabBarStyle: {
+          backgroundColor: 'white',
+          height: 110,
+          borderTopWidth: 0,
+          elevation: 10,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: -2 },
+          shadowOpacity: 0.1,
+          shadowRadius: 4,
+        },
+        tabBarItemStyle: {
+          borderRadius: 25,
+          marginHorizontal: 6,
+          marginVertical: Platform.OS === 'ios' ? 10 : 6,
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'center',
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+        },
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={22} name="house.fill" color={color} />
+          ),
+          tabBarLabel: ({ color }) => (
+            <Text style={{ color }}>Home</Text>
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="estadisticas"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Estadísticas',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={22} name="chart.bar.fill" color={color} />
+          ),
+          tabBarLabel: ({ color }) => (
+            <Text style={{ color }}>Stats</Text>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="control"
+        options={{
+          title: 'Control',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={22} name="gamecontroller.fill" color={color} />
+          ),
+          tabBarLabel: ({ color }) => (
+            <Text style={{ color }}>Control</Text>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="admin"
+        options={{
+          title: 'Admin',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={22} name="shield.fill" color={color} />
+          ),
+          tabBarLabel: ({ color }) => (
+            <Text style={{ color }}>Admin</Text>
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="configuracion"
+        options={{
+          title: 'Config',
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={22} name="gearshape.fill" color={color} />
+          ),
+          tabBarLabel: ({ color }) => (
+            <Text style={{ color }}>Config</Text>
+          ),
         }}
       />
     </Tabs>
